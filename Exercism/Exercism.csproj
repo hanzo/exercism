@@ -50,6 +50,8 @@
     <Compile Include="csharp\bob\BobTest.cs" />
     <Compile Include="csharp\etl\ETL.cs" />
     <Compile Include="csharp\etl\ETLTest.cs" />
+    <Compile Include="csharp\hamming\Hamming.cs" />
+    <Compile Include="csharp\hamming\HammingTest.cs" />
     <Compile Include="csharp\leap\Year.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +61,7 @@
     <None Include="csharp\anagram\README.md" />
     <None Include="csharp\bob\README.md" />
     <None Include="csharp\etl\README.md" />
+    <None Include="csharp\hamming\README.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
