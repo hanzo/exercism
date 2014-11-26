@@ -67,6 +67,8 @@
     <Compile Include="csharp\robot-name\RobotNameTest.cs" />
     <Compile Include="csharp\sum-of-multiples\SumOfMultiples.cs" />
     <Compile Include="csharp\sum-of-multiples\SumOfMultiplesTest.cs" />
+    <Compile Include="csharp\twelve-days\TwelveDaysSong.cs" />
+    <Compile Include="csharp\twelve-days\TwelveDaysTest.cs" />
     <Compile Include="csharp\word-count\Phrase.cs" />
     <Compile Include="csharp\word-count\WordCountTest.cs" />
     <Compile Include="Program.cs" />
@@ -84,6 +86,7 @@
     <None Include="csharp\phone-number\README.md" />
     <None Include="csharp\robot-name\README.md" />
     <None Include="csharp\sum-of-multiples\README.md" />
+    <None Include="csharp\twelve-days\README.md" />
     <None Include="csharp\word-count\README.md" />
     <None Include="packages.config" />
   </ItemGroup>
