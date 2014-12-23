@@ -50,6 +50,8 @@
     <Compile Include="csharp\bob\BobTest.cs" />
     <Compile Include="csharp\etl\ETL.cs" />
     <Compile Include="csharp\etl\ETLTest.cs" />
+    <Compile Include="csharp\gigasecond\Gigasecond.cs" />
+    <Compile Include="csharp\gigasecond\GigasecondTest.cs" />
     <Compile Include="csharp\grade-school\GradeSchoolTest.cs" />
     <Compile Include="csharp\grade-school\School.cs" />
     <Compile Include="csharp\hamming\Hamming.cs" />
@@ -80,6 +82,7 @@
     <None Include="csharp\anagram\README.md" />
     <None Include="csharp\bob\README.md" />
     <None Include="csharp\etl\README.md" />
+    <None Include="csharp\gigasecond\README.md" />
     <None Include="csharp\grade-school\README.md" />
     <None Include="csharp\hamming\README.md" />
     <None Include="csharp\leap\README.md" />
