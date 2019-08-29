@@ -64,4 +64,52 @@ var testCases = []struct {
 		0,
 		true,
 	},
+	{ // non-ascii input
+		"aüa",
+		"aüa",
+		0,
+		false,
+	},
+	{ // more non-ascii input
+		"aüa",
+		"aÃa",
+		1,
+		false,
+	},
+	{ // more non-ascii input
+		"😬",
+		"😬",
+		0,
+		false,
+	},
+	{ // more non-ascii input
+		"😬",
+		"😭",
+		1,
+		false,
+	},
+	{ // more non-ascii input
+		"⌘",
+		"⌘",
+		0,
+		false,
+	},
+	{ // more non-ascii input
+		"⌘",
+		"日",
+		1,
+		false,
+	},
+	{ // more non-ascii input
+		"日本語",
+		"日本語",
+		0,
+		false,
+	},
+	{ // more non-ascii input
+		"日本語",
+		"日語本",
+		2,
+		false,
+	},
 }
