@@ -112,4 +112,10 @@ var testCases = []struct {
 		2,
 		false,
 	},
+	{ // more non-ascii input
+		"u",
+		"ü",
+		1,
+		false,
+	},
 }
