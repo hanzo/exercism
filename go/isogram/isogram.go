@@ -11,11 +11,10 @@ func IsIsogram(word string) bool {
 			continue
 		}
 		letter = unicode.ToLower(letter)
-		if _, found := seenLetters[letter]; found {
+		if seenLetters[letter] {
 			return false
-		} else {
-			seenLetters[letter] = true
 		}
+		seenLetters[letter] = true
 	}
 	return true
 }
