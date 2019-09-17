@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "/Users/hanswerner/src/exercism"
+		}
+	],
+	"settings": {
+		"go.lintTool": "golangci-lint",
+		"editor.formatOnSave": true
+	}
+}
