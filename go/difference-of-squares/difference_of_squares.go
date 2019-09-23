@@ -1,13 +1,11 @@
 // Package diffsquares contains functions related for calculating the sum of squares and the square of sum
 package diffsquares
 
-import "math"
-
 // SquareOfSum returns the square of the sum of the first N natural numbers
 func SquareOfSum(n int) int {
 	// Formula: https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF#Partial_sums
 	sum := n * (n + 1) / 2
-	return int(math.Pow(float64(sum), 2))
+	return sum * sum
 }
 
 // SumOfSquares returns the sum of the square of each of the first N natural numbers
