@@ -13,21 +13,22 @@ func Valid(input string) bool {
 	if len(input) <= 1 {
 		return false
 	}
+	// double every second digit starting from the right
+	doubleDigit := len(input)%2 == 0
 	sum := 0
-	shouldDouble := false
-	for i := len(input) - 1; i >= 0; i-- {
-		digit, err := strconv.Atoi(string(input[i]))
+	for _, ch := range input {
+		digit, err := strconv.Atoi(string(ch))
 		if err != nil {
 			return false
 		}
-		if shouldDouble {
+		if doubleDigit {
 			digit *= 2
 			if digit > 9 {
 				digit -= 9
 			}
 		}
 		sum += digit
-		shouldDouble = !shouldDouble
+		doubleDigit = !doubleDigit
 	}
 	return sum%10 == 0
 }
