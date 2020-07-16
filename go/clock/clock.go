@@ -2,7 +2,12 @@ package clock
 
 import (
 	"fmt"
-	"time"
+)
+
+const (
+	minutesPerHour = 60
+	hoursPerDay    = 24
+	minutesPerDay  = minutesPerHour * hoursPerDay
 )
 
 // Clock handles times without dates.
@@ -12,47 +17,43 @@ type Clock interface {
 	Subtract(minutes int) Clock
 }
 
-// Ideally we could store a time.Time on the struct instead of having to call time.Date()
-// repeatedly, but this causes equality checks to fail in some cases (e.g. day wraparound).
 type clock struct {
-	hour   int
-	minute int
+	minuteOfDay int
 }
 
-// makeTime returns a Time object for the given hour and minute. The resulting
-// Time object will have Hour and Minute values in their expected ranges.
-// The other values (day, second, etc) are unused.
-func makeTime(hour, minute int) time.Time {
-	return time.Date(0, 0, 0, hour, minute, 0, 0, time.UTC)
+// getMinuteOfDay returns an integer between 0 and 1439 (inclusive) representing
+// the minute of the day for the given hour and minute values.
+func getMinuteOfDay(hour, minute int) int {
+	totalMins := (hour * minutesPerHour) + minute
+	trimmedMins := totalMins % minutesPerDay
+	// negative times should roll over to 'previous day'
+	if trimmedMins < 0 {
+		trimmedMins += minutesPerDay
+	}
+	return trimmedMins
 }
 
-// New returns a Clock with the given hour and minute values.
+// New returns a Clock storing the time for the given hour and minute values.
 func New(hour, minute int) Clock {
-	theTime := makeTime(hour, minute)
 	return clock{
-		hour:   theTime.Hour(),
-		minute: theTime.Minute(),
+		minuteOfDay: getMinuteOfDay(hour, minute),
 	}
 }
 
 func (c clock) String() string {
-	return fmt.Sprintf("%02d:%02d", c.hour, c.minute)
+	return fmt.Sprintf("%02d:%02d",
+		c.minuteOfDay/minutesPerHour,
+		c.minuteOfDay%minutesPerHour)
 }
 
 func (c clock) Add(minutes int) Clock {
-	oldTime := makeTime(c.hour, c.minute)
-	newTime := oldTime.Add(time.Minute * time.Duration(minutes))
 	return clock{
-		minute: newTime.Minute(),
-		hour:   newTime.Hour(),
+		minuteOfDay: getMinuteOfDay(0, c.minuteOfDay+minutes),
 	}
 }
 
 func (c clock) Subtract(minutes int) Clock {
-	oldTime := makeTime(c.hour, c.minute)
-	newTime := oldTime.Add(time.Minute * time.Duration(minutes) * -1)
 	return clock{
-		minute: newTime.Minute(),
-		hour:   newTime.Hour(),
+		minuteOfDay: getMinuteOfDay(0, c.minuteOfDay-minutes),
 	}
 }
