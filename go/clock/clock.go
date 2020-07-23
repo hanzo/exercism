@@ -18,25 +18,21 @@ type Clock interface {
 }
 
 type clock struct {
+	// minuteOfDay is an integer between 0 and 1439 (inclusive) representing
+	// the minute of the day (e.g. 1439 represents 23:59)
 	minuteOfDay int
 }
 
-// getMinuteOfDay returns an integer between 0 and 1439 (inclusive) representing
-// the minute of the day for the given hour and minute values.
-func getMinuteOfDay(hour, minute int) int {
+// New returns a Clock storing the time for the given hour and minute values.
+func New(hour, minute int) Clock {
 	totalMins := (hour * minutesPerHour) + minute
 	trimmedMins := totalMins % minutesPerDay
 	// negative times should roll over to 'previous day'
 	if trimmedMins < 0 {
 		trimmedMins += minutesPerDay
 	}
-	return trimmedMins
-}
-
-// New returns a Clock storing the time for the given hour and minute values.
-func New(hour, minute int) Clock {
 	return clock{
-		minuteOfDay: getMinuteOfDay(hour, minute),
+		minuteOfDay: trimmedMins,
 	}
 }
 
@@ -47,13 +43,9 @@ func (c clock) String() string {
 }
 
 func (c clock) Add(minutes int) Clock {
-	return clock{
-		minuteOfDay: getMinuteOfDay(0, c.minuteOfDay+minutes),
-	}
+	return New(0, c.minuteOfDay+minutes)
 }
 
 func (c clock) Subtract(minutes int) Clock {
-	return clock{
-		minuteOfDay: getMinuteOfDay(0, c.minuteOfDay-minutes),
-	}
+	return New(0, c.minuteOfDay-minutes)
 }
