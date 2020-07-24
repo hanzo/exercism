@@ -11,13 +11,7 @@ const (
 )
 
 // Clock handles times without dates.
-type Clock interface {
-	String() string
-	Add(minutes int) Clock
-	Subtract(minutes int) Clock
-}
-
-type clock struct {
+type Clock struct {
 	// minuteOfDay is an integer between 0 and 1439 (inclusive) representing
 	// the minute of the day (e.g. 1439 represents 23:59)
 	minuteOfDay int
@@ -31,21 +25,21 @@ func New(hour, minute int) Clock {
 	if trimmedMins < 0 {
 		trimmedMins += minutesPerDay
 	}
-	return clock{
+	return Clock{
 		minuteOfDay: trimmedMins,
 	}
 }
 
-func (c clock) String() string {
+func (c Clock) String() string {
 	return fmt.Sprintf("%02d:%02d",
 		c.minuteOfDay/minutesPerHour,
 		c.minuteOfDay%minutesPerHour)
 }
 
-func (c clock) Add(minutes int) Clock {
+func (c Clock) Add(minutes int) Clock {
 	return New(0, c.minuteOfDay+minutes)
 }
 
-func (c clock) Subtract(minutes int) Clock {
+func (c Clock) Subtract(minutes int) Clock {
 	return New(0, c.minuteOfDay-minutes)
 }
