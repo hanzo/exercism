@@ -4,12 +4,6 @@ import (
 	"fmt"
 )
 
-const (
-	minutesPerHour = 60
-	hoursPerDay    = 24
-	minutesPerDay  = minutesPerHour * hoursPerDay
-)
-
 // Clock handles times without dates.
 type Clock struct {
 	// minuteOfDay is an integer between 0 and 1439 (inclusive) representing
@@ -19,21 +13,19 @@ type Clock struct {
 
 // New returns a Clock storing the time for the given hour and minute values.
 func New(hour, minute int) Clock {
-	totalMins := (hour * minutesPerHour) + minute
-	trimmedMins := totalMins % minutesPerDay
+	m := minute + hour*60
+	m %= 24 * 60
 	// negative times should roll over to 'previous day'
-	if trimmedMins < 0 {
-		trimmedMins += minutesPerDay
+	if m < 0 {
+		m += 24 * 60
 	}
-	return Clock{
-		minuteOfDay: trimmedMins,
-	}
+	return Clock{m}
 }
 
 func (c Clock) String() string {
 	return fmt.Sprintf("%02d:%02d",
-		c.minuteOfDay/minutesPerHour,
-		c.minuteOfDay%minutesPerHour)
+		c.minuteOfDay/60,
+		c.minuteOfDay%60)
 }
 
 func (c Clock) Add(minutes int) Clock {
