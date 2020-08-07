@@ -3,7 +3,6 @@ package dna
 
 import (
 	"fmt"
-	"strings"
 )
 
 // Histogram is a mapping from nucleotide to its count in given DNA.
@@ -24,8 +23,7 @@ func (d DNA) Counts() (Histogram, error) {
 		'T': 0,
 	}
 
-	dna := strings.ToUpper(string(d))
-	for _, nuc := range dna {
+	for _, nuc := range d {
 		if _, found := h[nuc]; found {
 			h[nuc]++
 		} else {

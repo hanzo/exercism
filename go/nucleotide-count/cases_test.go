@@ -37,9 +37,9 @@ var testCases = []struct {
 		errorExpected: true,
 	},
 	{
-		description: "lowercase character",
-		strand:      "g",
-		expected:    Histogram{'A': 0, 'C': 0, 'G': 1, 'T': 0},
+		description:   "lowercase character",
+		strand:        "g",
+		errorExpected: true,
 	},
 	{
 		description:   "non-ascii",
