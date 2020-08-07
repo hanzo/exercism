@@ -17,7 +17,7 @@ type DNA string
 func (d DNA) Counts() (Histogram, error) {
 
 	// initialize the histogram with a count of zero for each nucleotide type
-	var h Histogram = Histogram{
+	h := Histogram{
 		'A': 0,
 		'C': 0,
 		'G': 0,
