@@ -17,38 +17,26 @@ type Node struct {
 	Children []*Node
 }
 
+// the constraints of the question imply that the root node ID must be zero
+const rootNodeID = 0
+
 // Build returns the root node of a tree representation of the given list of records.
 func Build(records []Record) (*Node, error) {
-	var root *Node
 	nodeLookup := make(map[int]*Node)
 	// sort records by ID in ascending order
 	sort.Slice(records, func(i, j int) bool {
 		return records[i].ID < records[j].ID
 	})
-	for _, r := range records {
-		if r.ID < 0 || r.ID >= len(records) {
-			return nil, fmt.Errorf("invalid ID: %d", r.ID)
+	for i, r := range records {
+		parent, foundParent := nodeLookup[r.Parent]
+		if r.ID != i || (r.ID == rootNodeID && r.ID != r.Parent) || (r.ID > rootNodeID && !foundParent) {
+			return nil, fmt.Errorf("invalid record with ID %d and parent ID %d", r.ID, r.Parent)
 		}
-		if r.ID == r.Parent {
-			if root != nil {
-				return nil, fmt.Errorf("multiple root nodes found. first ID: %d, second ID: %d", root.ID, r.ID)
-			}
-			root = &Node{ID: r.ID}
-			nodeLookup[r.ID] = root
-			continue
+		node := &Node{ID: r.ID}
+		nodeLookup[r.ID] = node
+		if r.ID > rootNodeID {
+			parent.Children = append(parent.Children, node)
 		}
-		if _, found := nodeLookup[r.ID]; found {
-			return nil, fmt.Errorf("duplicate node found with ID %d", r.ID)
-		}
-		// every node's ID is greater than its parent's ID, so we've already stored
-		// a reference to the parent by the time we visit any child node
-		parent, found := nodeLookup[r.Parent]
-		if !found {
-			return nil, fmt.Errorf("failed to find parent with ID %d", r.Parent)
-		}
-		childNode := &Node{ID: r.ID}
-		nodeLookup[r.ID] = childNode
-		parent.Children = append(parent.Children, childNode)
 	}
-	return root, nil
+	return nodeLookup[0], nil
 }
